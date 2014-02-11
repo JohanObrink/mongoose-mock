@@ -42,7 +42,7 @@ var Schema = function () {
   return Model;
 };
 
-var mongoose = exports.mongoose = {
+var mongoose = module.exports = {
   Schema: Schema,
   model: function (name, Type) {
     Object.keys(Type.statics).forEach(function (key) {
