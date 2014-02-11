@@ -1,0 +1,24 @@
+{
+  "name": "mongoose-mock",
+  "version": "0.1.0",
+  "description": "A replacement for mongoose in tests returning models with sinon stubs for methods",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:JohanObrink/mongoose-mock.git"
+  },
+  "keywords": [
+    "mongoose",
+    "test",
+    "sinon"
+  ],
+  "author": "Johan Öbrink <johan.obrink@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JohanObrink/mongoose-mock/issues"
+  },
+  "homepage": "https://github.com/JohanObrink/mongoose-mock"
+}
