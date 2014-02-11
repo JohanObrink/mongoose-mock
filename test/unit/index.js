@@ -1,6 +1,6 @@
 var chai = require('chai'),
   expect = chai.expect,
-  mongoose = require('../index.js'),
+  mongoose = require('../../index.js'),
   Schema = mongoose.Schema;
 
 describe('mongoose-mocks', function () {

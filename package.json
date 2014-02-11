@@ -31,6 +31,8 @@
     "grunt": "~0.4.2",
     "grunt-mocha-test": "~0.9.0",
     "grunt-contrib-jshint": "~0.8.0",
-    "grunt-contrib-watch": "~0.5.3"
+    "grunt-contrib-watch": "~0.5.3",
+    "proxyquire": "~0.5.2",
+    "mongoose": "~3.8.7"
   }
 }
