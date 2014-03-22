@@ -42,16 +42,21 @@ var Schema = function () {
   return Model;
 };
 
+var models_ = {};
+
 var mongoose = module.exports = {
   Schema: Schema,
   model: function (name, Type) {
-    Object.keys(Type.statics).forEach(function (key) {
-      Type[key] = Type.statics[key];
-    });
-    Object.keys(Type.methods).forEach(function (key) {
-      Type.prototype[key] = Type.methods[key];
-    });
-    return Type;
+    if (Type) {
+      Object.keys(Type.statics).forEach(function (key) {
+        Type[key] = Type.statics[key];
+      });
+      Object.keys(Type.methods).forEach(function (key) {
+        Type.prototype[key] = Type.methods[key];
+      });
+      models_[name] = Type;
+    } 
+    return models_[name];
   },
   connect: sinon.stub()
 };

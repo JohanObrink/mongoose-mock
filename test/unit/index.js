@@ -118,5 +118,11 @@ describe('mongoose-mocks', function () {
       var obj = new Model();
       expect(obj.foo).to.be.a('function');
     });
+    it('stores and returns a model by name', function () {
+      var MyModel = new Schema({});
+      mongoose.model('MyModel', MyModel);
+      var MyModelAgain = mongoose.model('MyModel');
+      expect(MyModel).to.deep.equal(MyModelAgain);
+    });
   });
 });
