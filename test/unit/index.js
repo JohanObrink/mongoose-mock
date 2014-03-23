@@ -149,4 +149,25 @@ describe('mongoose-mocks', function () {
       expect(MyModel).to.deep.equal(MyModelAgain);
     });
   });
+  describe('#on', function () {
+    it('register a callback for event \'model\'invoked when a new Schema is created', function () {
+      var MyModel = null;
+      mongoose.on('model', function(model) {
+        expect(model).to.be.a('function');
+        MyModel = model;
+      });
+      new mongoose.Schema({});
+      expect(MyModel).to.be.not.null;
+    });
+    it('registers a callback for event \'document\' invoked when a new Model is created', function () {
+      var MyDocument = null;
+      mongoose.on('document', function(document) {
+        expect(document).to.be.an('object');
+        MyDocument = document;
+      }); 
+      var Model = new mongoose.Schema({});
+      new Model();
+      expect(MyDocument).to.be.not.null;
+    });
+  });
 });

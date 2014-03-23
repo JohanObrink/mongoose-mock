@@ -1,9 +1,22 @@
 'use strict';
 
 var sinon = require('sinon');
+var events = require('events');
+
+var mongoose = {};
+module.exports = mongoose;
+
+// Mongoose-mock emits events
+// when Models or Documents are created.
+// This allows for the mock injector to get notifications
+// about use of the mock and get a chance to access
+// the mocked models and document produced.
+events.EventEmitter.call(mongoose);
+mongoose.__proto__ = events.EventEmitter.prototype; // jshint ignore:line
 
 // ## Schema
 var Schema = function () {
+
   function Model(properties) {
     var self = this;
 
@@ -15,6 +28,7 @@ var Schema = function () {
     this.save = sinon.stub();
     this.increment = sinon.stub();
     this.remove = sinon.stub();
+    mongoose.emit('document', this);
   }
 
   Model.statics = {};
@@ -60,28 +74,31 @@ var Schema = function () {
   Model.update = sinon.stub();
   Model.where = sinon.stub();
 
+  mongoose.emit('model', Model);
   return Model;
 };
 
+// compiled models are stored in models_
+// and may be retrieved by name.
 var models_ = {};
+function createModelFromSchema(name, Type) {
+  if (Type) {
+    if (Type.statics) {
+      Object.keys(Type.statics).forEach(function (key) {
+        Type[key] = Type.statics[key];
+      });
+    }
+    if (Type.methods) {
+      Object.keys(Type.methods).forEach(function (key) {
+        Type.prototype[key] = Type.methods[key];
+      });
+    }
+    models_[name] = Type;
+  } 
+  return models_[name];
+}
 
-var mongoose = module.exports = {
-  Schema: Schema,
-  model: function (name, Type) {
-    if (Type) {
-      if (Type.statics) {
-        Object.keys(Type.statics).forEach(function (key) {
-          Type[key] = Type.statics[key];
-        });
-      }
-      if (Type.methods) {
-        Object.keys(Type.methods).forEach(function (key) {
-          Type.prototype[key] = Type.methods[key];
-        });
-      }
-      models_[name] = Type;
-    } 
-    return models_[name];
-  },
-  connect: sinon.stub()
-};
+mongoose.Schema = Schema;
+mongoose.model = createModelFromSchema;
+mongoose.connect = sinon.stub;
+
