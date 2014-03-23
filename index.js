@@ -16,8 +16,29 @@ var Schema = function () {
     this.increment = sinon.stub();
     this.remove = sinon.stub();
   }
+
   Model.statics = {};
   Model.methods = {};
+
+  Model.path = function() {
+    return {
+      validate: sinon.stub(),
+    };
+  };
+
+  Model.virtual = function() {
+    function SetterGetter(){
+      return {
+        set: function() {
+          return new SetterGetter();
+        },
+        get: function() {
+          return new SetterGetter();
+        }  
+      };
+    }
+    return new SetterGetter();
+  };
 
   Model.aggregate = sinon.stub();
   Model.count = sinon.stub();
@@ -48,12 +69,16 @@ var mongoose = module.exports = {
   Schema: Schema,
   model: function (name, Type) {
     if (Type) {
-      Object.keys(Type.statics).forEach(function (key) {
-        Type[key] = Type.statics[key];
-      });
-      Object.keys(Type.methods).forEach(function (key) {
-        Type.prototype[key] = Type.methods[key];
-      });
+      if (Type.statics) {
+        Object.keys(Type.statics).forEach(function (key) {
+          Type[key] = Type.statics[key];
+        });
+      }
+      if (Type.methods) {
+        Object.keys(Type.methods).forEach(function (key) {
+          Type.prototype[key] = Type.methods[key];
+        });
+      }
       models_[name] = Type;
     } 
     return models_[name];

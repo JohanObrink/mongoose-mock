@@ -82,6 +82,30 @@ describe('mongoose-mocks', function () {
       it('adds a stub for where()', function () {
         expect(Model.where).to.be.a('function');
       });
+      it('adds a stub for path()', function() {
+        expect(Model.path).to.be.a('function');
+      });
+      describe('path()', function () {
+        it('returns an object with a stub to validate', function () {
+          expect(Model.path()).to.be.an('object');
+          expect(Model.path().validate).to.exist.and.to.be.a('function');
+        });
+      });
+      it('adds a stub for virtual', function () {
+        expect(Model.virtual).to.be.a('function');
+      });
+      describe('virtual()', function () {
+        it('returns an object with a .get() and a .set()', function () {
+          expect(Model.virtual).to.be.a('function');
+          expect(Model.virtual()).to.be.an('object');
+          expect(Model.virtual()).to.be.an('object');
+        });
+        it('.get() and .set() return an object with .set() and .get()', function () {
+          expect(Model.virtual().get()).to.be.a('object').and.to.have.a.property('set').that.is.a('function');
+          expect(Model.virtual().set()).to.be.a('object').and.to.have.a.property('get').that.is.a('function');
+        });
+      });
+
     });
     describe('mongoose Model prototype functions', function () {
       var model;
