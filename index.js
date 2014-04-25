@@ -99,6 +99,7 @@ function createModelFromSchema(name, Type) {
 }
 
 mongoose.Schema = Schema;
+mongoose.Schema.Types = { ObjectId: ''};  // Defining mongoose types as dummies.
 mongoose.model = createModelFromSchema;
 mongoose.connect = sinon.stub;
 

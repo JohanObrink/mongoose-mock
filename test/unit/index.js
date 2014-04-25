@@ -18,6 +18,11 @@ describe('mongoose-mocks', function () {
 
       expect(myObject.foo).to.equal('bar');
     });
+    describe('mongoose Types', function() {
+      it('should have an ObjectId type', function() {
+        expect(Schema.Types).to.have.a.property('ObjectId');
+      });
+    });
     describe('mongoose Model functions', function () {
 
       var Model;
