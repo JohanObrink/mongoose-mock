@@ -1,11 +1,11 @@
 {
-  "private": true,
+  "private": false,
   "name": "mongoose-mock",
   "version": "0.2.0",
   "description": "A replacement for mongoose in tests returning models with sinon stubs for methods",
   "main": "index.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "./node_modules/gulp/bin/gulp.js test"
   },
   "repository": {
     "type": "git",
@@ -26,14 +26,15 @@
     "sinon": "~1.8.1"
   },
   "devDependencies": {
-    "mocha": "~1.17.1",
     "chai": "~1.9.0",
-    "sinon-chai": "~2.5.0",
     "grunt": "~0.4.2",
-    "grunt-mocha-test": "~0.9.0",
-    "grunt-contrib-jshint": "~0.8.0",
-    "grunt-contrib-watch": "~0.5.3",
+    "gulp": "^3.8.8",
+    "gulp-jshint": "^1.8.5",
+    "gulp-mocha": "^1.1.0",
+    "jshint-stylish": "^1.0.0",
+    "mocha": "^1.21.4",
+    "mongoose": "~3.8.7",
     "proxyquire": "~0.5.2",
-    "mongoose": "~3.8.7"
+    "sinon-chai": "~2.5.0"
   }
 }
