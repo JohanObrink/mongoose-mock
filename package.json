@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "mongoose-mock",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A replacement for mongoose in tests returning models with sinon stubs for methods",
   "main": "index.js",
   "scripts": {
