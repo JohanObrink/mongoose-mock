@@ -44,7 +44,7 @@ var Schema = function () {
   };
 
   Model.virtual = function() {
-    function SetterGetter(){
+    function SetterGetter() {
       return {
         set: function() {
           return new SetterGetter();
