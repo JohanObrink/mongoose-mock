@@ -51,7 +51,7 @@ var Schema = function () {
         },
         get: function() {
           return new SetterGetter();
-        }  
+        }
       };
     }
     return new SetterGetter();
@@ -71,9 +71,12 @@ var Schema = function () {
   Model.findOneAndUpdate = sinon.stub();
   Model.geoNear = sinon.stub();
   Model.geoSearch = sinon.stub();
+  Model.index = sinon.stub();
   Model.mapReduce = sinon.stub();
+  Model.plugin = sinon.stub();
   Model.populate = sinon.stub();
   Model.remove = sinon.stub();
+  Model.set = sinon.stub();
   Model.update = sinon.stub();
   Model.where = sinon.stub();
 
