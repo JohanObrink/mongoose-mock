@@ -18,6 +18,11 @@ describe('mongoose-mocks', function () {
 
       expect(myObject.foo).to.equal('bar');
     });
+    describe('mongoose Types', function() {
+      it('should have an ObjectId type', function() {
+        expect(Schema.Types).to.have.a.property('ObjectId');
+      });
+    });
     describe('mongoose Model functions', function () {
 
       var Model;
@@ -82,6 +87,30 @@ describe('mongoose-mocks', function () {
       it('adds a stub for where()', function () {
         expect(Model.where).to.be.a('function');
       });
+      it('adds a stub for path()', function() {
+        expect(Model.path).to.be.a('function');
+      });
+      describe('path()', function () {
+        it('returns an object with a stub to validate', function () {
+          expect(Model.path()).to.be.an('object');
+          expect(Model.path().validate).to.exist.and.to.be.a('function');
+        });
+      });
+      it('adds a stub for virtual', function () {
+        expect(Model.virtual).to.be.a('function');
+      });
+      describe('virtual()', function () {
+        it('returns an object with a .get() and a .set()', function () {
+          expect(Model.virtual).to.be.a('function');
+          expect(Model.virtual()).to.be.an('object');
+          expect(Model.virtual()).to.be.an('object');
+        });
+        it('.get() and .set() return an object with .set() and .get()', function () {
+          expect(Model.virtual().get()).to.be.a('object').and.to.have.a.property('set').that.is.a('function');
+          expect(Model.virtual().set()).to.be.a('object').and.to.have.a.property('get').that.is.a('function');
+        });
+      });
+
     });
     describe('mongoose Model prototype functions', function () {
       var model;
@@ -117,6 +146,33 @@ describe('mongoose-mocks', function () {
       var Model = mongoose.model('MyModel', MyModel);
       var obj = new Model();
       expect(obj.foo).to.be.a('function');
+    });
+    it('stores and returns a model by name', function () {
+      var MyModel = new Schema({});
+      mongoose.model('MyModel', MyModel);
+      var MyModelAgain = mongoose.model('MyModel');
+      expect(MyModel).to.deep.equal(MyModelAgain);
+    });
+  });
+  describe('#on', function () {
+    it('register a callback for event \'model\'invoked when a new Schema is created', function () {
+      var MyModel = null;
+      mongoose.on('model', function(model) {
+        expect(model).to.be.a('function');
+        MyModel = model;
+      });
+      new mongoose.Schema({});
+      expect(MyModel).to.be.not.null;
+    });
+    it('registers a callback for event \'document\' invoked when a new Model is created', function () {
+      var MyDocument = null;
+      mongoose.on('document', function(document) {
+        expect(document).to.be.an('object');
+        MyDocument = document;
+      }); 
+      var Model = new mongoose.Schema({});
+      new Model();
+      expect(MyDocument).to.be.not.null;
     });
   });
 });
