@@ -169,10 +169,37 @@ describe('mongoose-mocks', function () {
       mongoose.on('document', function(document) {
         expect(document).to.be.an('object');
         MyDocument = document;
-      }); 
+      });
       var Model = new mongoose.Schema({});
       new Model();
       expect(MyDocument).to.be.not.null;
     });
+  });
+
+
+  describe('mongoose static methods and properties', function () {
+      describe('.connect', function () {
+          it('should be a static method', function () {
+              expect(mongoose).itself.to.respondTo('connect');
+          });
+
+          it('should be a stub', function () {
+              expect(mongoose.connect).itself.to.respondTo('withArgs');
+          });
+      });
+
+      describe('.connection', function () {
+          it('should be a static property', function () {
+              expect(mongoose).to.have.property('connection')
+                .that.is.an('object');
+          });
+
+          describe('connection.on()', function () {
+              it('should be a spy', function () {
+                  expect(mongoose.connection.on).to.be.a('function')
+                    .and.have.property('callCount');
+              });
+          });
+      });
   });
 });
