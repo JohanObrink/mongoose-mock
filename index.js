@@ -100,12 +100,14 @@ function createModelFromSchema(name, Type) {
       });
     }
     models_[name] = Type;
-  } 
+  }
   return models_[name];
 }
 
 mongoose.Schema = Schema;
 mongoose.Schema.Types = { ObjectId: ''};  // Defining mongoose types as dummies.
 mongoose.model = createModelFromSchema;
-mongoose.connect = sinon.stub;
-
+mongoose.connect = sinon.stub();
+mongoose.connection = {
+    on: sinon.spy()
+};
