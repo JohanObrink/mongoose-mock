@@ -58,10 +58,12 @@ var Schema = function () {
   };
 
   Model.aggregate = sinon.stub();
+  Model.allowDiskUse = sinon.stub();
   Model.count = sinon.stub();
   Model.create = sinon.stub();
   Model.distinct = sinon.stub();
   Model.ensureIndexes = sinon.stub();
+  Model.exec = sinon.stub();
   Model.find = sinon.stub();
   Model.findById = sinon.stub();
   Model.findByIdAndRemove = sinon.stub();
@@ -106,6 +108,7 @@ function createModelFromSchema(name, Type) {
 
 mongoose.Schema = Schema;
 mongoose.Schema.Types = { ObjectId: ''};  // Defining mongoose types as dummies.
+mongoose.Types = mongoose.Schema.Types;
 mongoose.model = createModelFromSchema;
 mongoose.connect = sinon.stub;
 
