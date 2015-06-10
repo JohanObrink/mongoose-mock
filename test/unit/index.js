@@ -21,6 +21,7 @@ describe('mongoose-mocks', function () {
     describe('mongoose Types', function() {
       it('should have an ObjectId type', function() {
         expect(Schema.Types).to.have.a.property('ObjectId');
+        expect(mongoose.Types).to.have.a.property('ObjectId');
       });
     });
     describe('mongoose Model functions', function () {
@@ -31,6 +32,9 @@ describe('mongoose-mocks', function () {
       });
 
       it('adds a stub for aggregate()', function () {
+        expect(Model.aggregate).to.be.a('function');
+      });
+      it('adds a stub for allowDiskUse()', function () {
         expect(Model.aggregate).to.be.a('function');
       });
       it('adds a stub for count()', function () {
@@ -44,6 +48,9 @@ describe('mongoose-mocks', function () {
       });
       it('adds a stub for ensureIndexes()', function () {
         expect(Model.ensureIndexes).to.be.a('function');
+      });
+      it('adds a stub for exec()', function () {
+        expect(Model.exec).to.be.a('function');
       });
       it('adds a stub for find()', function () {
         expect(Model.find).to.be.a('function');
