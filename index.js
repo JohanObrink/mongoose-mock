@@ -39,6 +39,14 @@ var Schema = function () {
 
   Model.path = function() {
     return {
+      'default': sinon.stub(),
+      'get': sinon.stub(),
+      index: sinon.stub(),
+      required: sinon.stub(),
+      select: sinon.stub(),
+      'set': sinon.stub(),
+      text: sinon.stub(),
+      unique: sinon.stub(),
       validate: sinon.stub(),
     };
   };
