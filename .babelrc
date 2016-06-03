@@ -1,0 +1,4 @@
+{
+  "plugins": ["rewire"],
+  "presets": ["es2015"]
+}
