@@ -5,7 +5,8 @@
   "description": "A replacement for mongoose in tests returning models with sinon stubs for methods",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/gulp/bin/gulp.js test"
+    "test": "./node_modules/gulp/bin/gulp.js test",
+    "start": "./node_modules/gulp/bin/gulp.js"
   },
   "repository": {
     "type": "git",
