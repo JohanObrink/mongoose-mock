@@ -55,3 +55,50 @@ describe('User', function () {
   });
 });
 ```
+
+## Usage with Babel (ES6)
+
+Use [babel-plugin-rewire](https://github.com/speedskater/babel-plugin-rewire) to require-hook the Mongoose dependency.
+
+#### model/User.js
+```JavaScript
+import mongoose, { Schema } from 'mongoose'
+
+const User = new Schema({})
+User.static('findByName', function (name) {
+  return this.find({ name })
+})
+
+export default mongoose.model('User', User)
+```
+
+#### test/unit/model/User.js
+```JavaScript
+import chai, { expect } from 'chai'
+import mongooseMock from 'mongoose-mock'
+import sinon from 'sinon'
+import sinonChai from 'sinon-chai'
+import User from '../../../model/User'
+
+chai.use(sinonChai)
+
+describe('User', () => {
+
+  beforeEach(() => {
+    User.__Rewire__('mongoose', { mongoose: mongooseMock })
+  })
+
+  afterEach(() => {
+    User.__ResetDependency__('mongoose')
+  })
+
+  describe('.findByName', () => {
+    it('finds users by name', () => {
+      const spy = sinon.spy(User, 'find')
+      User.findByName('White')
+      expect(spy).to.have.been.calledOnce
+      User.find.restore()
+    })
+  })
+})
+```
