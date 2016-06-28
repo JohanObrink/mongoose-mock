@@ -36,6 +36,7 @@ var Schema = function () {
   Model.static = sinon.stub();
   Model.method = sinon.stub();
   Model.pre = sinon.stub();
+  Model.post = sinon.stub();
 
   Model.path = function() {
     return {
