@@ -18,8 +18,8 @@ describe('mongoose-mocks', function () {
 
       expect(myObject.foo).to.equal('bar');
     });
-    describe('mongoose Types', function() {
-      it('should have an ObjectId type', function() {
+    describe('mongoose Types', function () {
+      it('should have an ObjectId type', function () {
         expect(Schema.Types).to.have.a.property('ObjectId');
       });
     });
@@ -87,7 +87,10 @@ describe('mongoose-mocks', function () {
       it('adds a stub for where()', function () {
         expect(Model.where).to.be.a('function');
       });
-      it('adds a stub for path()', function() {
+      it('adds a stub for validateSync()', function () {
+        expect(Model.validateSync).to.be.a('function');
+      });
+      it('adds a stub for path()', function () {
         expect(Model.path).to.be.a('function');
       });
       describe('path()', function () {
@@ -116,7 +119,7 @@ describe('mongoose-mocks', function () {
       var model;
       beforeEach(function () {
         var Model = new Schema({});
-        model = new Model({foo: 'bar'});
+        model = new Model({ foo: 'bar' });
       });
       it('adds a stub for save()', function () {
         expect(model.save).to.be.a('function');
@@ -126,6 +129,9 @@ describe('mongoose-mocks', function () {
       });
       it('adds a stub for remove()', function () {
         expect(model.remove).to.be.a('function');
+      });
+      it('adds a stub for validateSync()', function () {
+        expect(model.validateSync).to.be.a('function');
       });
     });
   });
@@ -157,7 +163,7 @@ describe('mongoose-mocks', function () {
   describe('#on', function () {
     it('register a callback for event \'model\'invoked when a new Schema is created', function () {
       var MyModel = null;
-      mongoose.on('model', function(model) {
+      mongoose.on('model', function (model) {
         expect(model).to.be.a('function');
         MyModel = model;
       });
@@ -166,10 +172,10 @@ describe('mongoose-mocks', function () {
     });
     it('registers a callback for event \'document\' invoked when a new Model is created', function () {
       var MyDocument = null;
-      mongoose.on('document', function(document) {
+      mongoose.on('document', function (document) {
         expect(document).to.be.an('object');
         MyDocument = document;
-      }); 
+      });
       var Model = new mongoose.Schema({});
       new Model();
       expect(MyDocument).to.be.not.null;

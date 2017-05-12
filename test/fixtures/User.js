@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
 var User = new Schema({});
 User.statics.createAndSave = function (props, callback) {
   var user = new User(props);
-  user.save(function(err, result) {
+  user.save(function (err, result) {
     callback(err, result);
   });
   return user;
