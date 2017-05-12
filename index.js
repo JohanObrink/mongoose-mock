@@ -4,7 +4,6 @@ var sinon = require('sinon');
 var events = require('events');
 
 var mongoose = {};
-module.exports = mongoose;
 
 // Mongoose-mock emits events
 // when Models or Documents are created.
@@ -14,25 +13,26 @@ module.exports = mongoose;
 events.EventEmitter.call(mongoose);
 mongoose.__proto__ = events.EventEmitter.prototype; // jshint ignore:line
 
+var ModelPrototype = {
+  save: sinon.stub(),
+  increment: sinon.stub(),
+  remove: sinon.stub(),
+  validateSync: sinon.stub()
+};
+
 // ## Schema
 var Schema = function () {
 
-  class Model {
-    constructor(properties) {
-      if (properties) {
-        Object.keys(properties).forEach(function (key) {
-          this[key] = properties[key];
-        }.bind(this));
-      }
-
-      mongoose.emit('document', this);
+  function Model(properties) {
+    if (properties) {
+      Object.keys(properties).forEach(function (key) {
+        this[key] = properties[key];
+      }.bind(this));
     }
-  }
+    mongoose.emit('document', this);
 
-  Model.prototype.save = sinon.stub();
-  Model.prototype.increment = sinon.stub();
-  Model.prototype.remove = sinon.stub();
-  Model.prototype.validateSync = sinon.stub();
+    this.__proto__ = ModelPrototype;
+  }
 
   Model.statics = {};
   Model.methods = {};
@@ -83,6 +83,7 @@ var Schema = function () {
   Model.update = sinon.stub();
   Model.where = sinon.stub();
   Model.validateSync = sinon.stub();
+  Model.prototype = ModelPrototype;
 
   mongoose.emit('model', Model);
   return Model;
@@ -112,4 +113,4 @@ mongoose.Schema = Schema;
 mongoose.Schema.Types = { ObjectId: '' };  // Defining mongoose types as dummies.
 mongoose.model = createModelFromSchema;
 mongoose.connect = sinon.stub;
-
+module.exports = mongoose;
