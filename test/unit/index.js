@@ -130,6 +130,9 @@ describe('mongoose-mocks', function () {
       it('adds a stub for remove()', function () {
         expect(model.remove).to.be.a('function');
       });
+      it('adds a stub for validateSync()', function () {
+        expect(model.validateSync).to.be.a('function');
+      });
     });
   });
   describe('#model', function () {

@@ -28,6 +28,7 @@ var Schema = function () {
     this.save = sinon.stub();
     this.increment = sinon.stub();
     this.remove = sinon.stub();
+    this.validateSync = sinon.stub();
     mongoose.emit('document', this);
   }
 
