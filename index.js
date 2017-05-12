@@ -20,7 +20,7 @@ var Schema = function () {
   function Model(properties) {
     var self = this;
 
-    if(properties) {
+    if (properties) {
       Object.keys(properties).forEach(function (key) {
         self[key] = properties[key];
       });
@@ -37,19 +37,19 @@ var Schema = function () {
   Model.method = sinon.stub();
   Model.pre = sinon.stub();
 
-  Model.path = function() {
+  Model.path = function () {
     return {
       validate: sinon.stub(),
     };
   };
 
-  Model.virtual = function() {
+  Model.virtual = function () {
     function SetterGetter() {
       return {
-        set: function() {
+        set: function () {
           return new SetterGetter();
         },
-        get: function() {
+        get: function () {
           return new SetterGetter();
         }
       };
@@ -79,6 +79,7 @@ var Schema = function () {
   Model.set = sinon.stub();
   Model.update = sinon.stub();
   Model.where = sinon.stub();
+  Model.validateSync = sinon.stub();
 
   mongoose.emit('model', Model);
   return Model;
@@ -100,12 +101,12 @@ function createModelFromSchema(name, Type) {
       });
     }
     models_[name] = Type;
-  } 
+  }
   return models_[name];
 }
 
 mongoose.Schema = Schema;
-mongoose.Schema.Types = { ObjectId: ''};  // Defining mongoose types as dummies.
+mongoose.Schema.Types = { ObjectId: '' };  // Defining mongoose types as dummies.
 mongoose.model = createModelFromSchema;
 mongoose.connect = sinon.stub;
 
