@@ -17,20 +17,22 @@ mongoose.__proto__ = events.EventEmitter.prototype; // jshint ignore:line
 // ## Schema
 var Schema = function () {
 
-  function Model(properties) {
-    var self = this;
+  class Model {
+    constructor(properties) {
+      if (properties) {
+        Object.keys(properties).forEach(function (key) {
+          this[key] = properties[key];
+        }.bind(this));
+      }
 
-    if (properties) {
-      Object.keys(properties).forEach(function (key) {
-        self[key] = properties[key];
-      });
+      mongoose.emit('document', this);
     }
-    this.save = sinon.stub();
-    this.increment = sinon.stub();
-    this.remove = sinon.stub();
-    this.validateSync = sinon.stub();
-    mongoose.emit('document', this);
   }
+
+  Model.prototype.save = sinon.stub();
+  Model.prototype.increment = sinon.stub();
+  Model.prototype.remove = sinon.stub();
+  Model.prototype.validateSync = sinon.stub();
 
   Model.statics = {};
   Model.methods = {};

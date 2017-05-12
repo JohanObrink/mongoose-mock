@@ -17,6 +17,7 @@ describe('User', function () {
   describe('.createAndSave', function () {
     it('saves the user', function () {
       var callback = sinon.spy();
+      User.prototype.save.return
       var user = User.createAndSave({ title: 'Mr', lastName: 'White' }, callback);
       expect(user.save).calledOnce;
     });
